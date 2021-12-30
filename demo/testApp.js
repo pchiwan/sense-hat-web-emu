@@ -1,6 +1,6 @@
 const path = require('path')
 
-const imagePath = path.join(process.cwd(), 'src', 'space_invader.png')
+const imagePath = path.join(process.cwd(), 'demo', 'space_invader.png')
 
 let senseLeds
 
