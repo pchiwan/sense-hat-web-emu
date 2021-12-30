@@ -23,6 +23,7 @@ export const TableCell = ({ key, color, showBorder }) => (
     style={{
       height: '20px',
       width: '20px',
+      display: 'inline',
       backgroundColor: color,
       border: `${showBorder ? '1px solid darkgrey' : 'none'}`,
       borderRadius: `${showBorder ? '0' : '3px'}`,
