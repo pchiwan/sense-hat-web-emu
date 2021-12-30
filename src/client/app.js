@@ -3,6 +3,7 @@ import { h, render } from 'preact'
 import Console from './components/console'
 import SenseHAT from './components/senseHat'
 import { isArrowKey } from './utils'
+import './styles.css'
 
 const App = socket => {
   const handleKeyEvent = event => {

@@ -1,7 +1,8 @@
 import { h } from 'preact'
-import { shallow } from 'preact-render-spy'
+import { shallow } from 'enzyme'
 import MockedSocket from 'socket.io-mock'
 
+import Checkbox from './checkbox'
 import SenseHAT from './senseHat'
 import LedMatrix from './ledMatrix'
 
@@ -24,9 +25,9 @@ describe('SenseHAT component', () => {
     })
 
     test('shows borders of matrix cells when board is toggled', () => {
-      expect(wrapper.find(LedMatrix).attr('showCellBorders')).toBeFalsy()
-      wrapper.find('[onChange]').simulate('change')
-      expect(wrapper.find(LedMatrix).attr('showCellBorders')).toBeTruthy()
+      expect(wrapper.find(LedMatrix).prop('showCellBorders')).toBeFalsy()
+      wrapper.find(Checkbox).dive().find('input').simulate('change')
+      expect(wrapper.find(LedMatrix).prop('showCellBorders')).toBeTruthy()
     })
 
     test(`updates the matrix when 'updateMatrix' event is received through socket`, () => {

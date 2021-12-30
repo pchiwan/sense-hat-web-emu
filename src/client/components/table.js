@@ -1,11 +1,11 @@
 import { h } from 'preact'
 
-export const Table = ({ children, getRef, style }) => (
+export const Table = ({ children, getRef }) => (
   <table
     ref={getRef}
     cellPadding='0'
     cellSpacing='0'
-    style={style}
+    className="table"
   >
     <tbody>
       {children}
@@ -17,17 +17,14 @@ Table.defaultProps = {
   getRef: () => {}
 }
 
+export const TableRow = ({ children }) => (
+  <tr className="table-row">{children}</tr>
+)
+
 export const TableCell = ({ key, color, showBorder }) => (
   <td
     key={key}
-    style={{
-      height: '20px',
-      width: '20px',
-      display: 'inline',
-      backgroundColor: color,
-      border: `${showBorder ? '1px solid darkgrey' : 'none'}`,
-      borderRadius: `${showBorder ? '0' : '3px'}`,
-      boxSizing: 'border-box'
-    }}
+    className={`table-cell ${showBorder ? 'with-border' : ''}`}
+    style={{ backgroundColor: color }}
   />
 )

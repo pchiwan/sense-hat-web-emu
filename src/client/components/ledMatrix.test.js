@@ -1,8 +1,8 @@
 import { h } from 'preact'
-import { shallow } from 'preact-render-spy'
+import { shallow } from 'enzyme'
 
 import LedMatrix from './ledMatrix'
-import { Table, TableCell } from './table'
+import { Table, TableCell, TableRow } from './table'
 
 describe('LedMatrix component', () => {
   const expectTableLengthToEqual0 = value => {
@@ -29,7 +29,7 @@ describe('LedMatrix component', () => {
     const matrix = Array(4).fill(0)
     const wrapper = shallow(<LedMatrix matrix={matrix} />)
     expect(wrapper.find(Table).length).toEqual(1)
-    expect(wrapper.find('tr').length).toEqual(2)
+    expect(wrapper.find(TableRow).length).toEqual(2)
     expect(wrapper.find(TableCell).length).toEqual(4)
   })
 })

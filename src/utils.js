@@ -163,10 +163,10 @@ function trimWhitespace (pixels) {
 
 function checkXY (x, y) {
   if (x < 0 || x > MATRIX_SIZE - 1) {
-    throw Error(`x=${x} violates 0 <= x <= ${MATRIX_SIZE - 1}`)
+    throw Error(`x = ${x} violates 0 <= x <= ${MATRIX_SIZE - 1}`)
   }
   if (y < 0 || y > MATRIX_SIZE - 1) {
-    throw Error(`y=${y} violates 0 <= y <= ${MATRIX_SIZE - 1}`)
+    throw Error(`y = ${y} violates 0 <= y <= ${MATRIX_SIZE - 1}`)
   }
 }
 

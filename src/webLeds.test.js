@@ -83,8 +83,13 @@ describe('WebLeds', () => {
   })
 
   describe('setPixels', () => {
-    test('returns an error if matrix does not have required length', () => {
-      webLeds.setPixels(Array(4).fill(GREEN), expectValueToBeError)
+    test('returns an error if matrix does not have required length', async () => {
+      try {
+        await webLeds.setPixels(Array(4).fill(GREEN))
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error)
+        expect(err.message).toBe('Pixel arrays must have 64 elements')
+      }
     })
 
     test('synchronously sets the matrix with required length', () => {
@@ -104,9 +109,20 @@ describe('WebLeds', () => {
   })
 
   describe('setPixel', () => {
-    test('returns an error if x/y coordinates are invalid', () => {
-      webLeds.setPixel(9, 0, 0, 0, 0, expectValueToBeError)
-      webLeds.setPixel(0, -1, 0, 0, 0, expectValueToBeError)
+    test('returns an error if x/y coordinates are invalid', async () => {
+      try {
+        await webLeds.setPixel(9, 0, 0, 0, 0, expectValueToBeError)
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error)
+        expect(err.message).toBe('x = 9 violates 0 <= x <= 7')
+      }
+
+      try {
+        await webLeds.setPixel(0, -1, 0, 0, 0, expectValueToBeError)
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error)
+        expect(err.message).toBe('y = -1 violates 0 <= y <= 7')
+      }
     })
 
     test('sets pixel at x/y coordinates with black if invalid color is provided', () => {

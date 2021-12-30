@@ -77,7 +77,7 @@ const WebLeds = socket => {
         ? console.error(error.message)
         : callback(error)
     }
-  
+
     return sync
       ? innerMatrix[getCoord(x, y, rotation)]
       : callback(innerMatrix[getCoord(x, y, rotation)])
@@ -95,7 +95,7 @@ const WebLeds = socket => {
     return new Promise((resolve, reject) => {
       if (matrix.length !== MATRIX_LENGTH) {
         const errorMessage = `Pixel arrays must have ${MATRIX_LENGTH} elements`
-        return reject(callback(Error(errorMessage)))
+        return reject(Error(errorMessage))
       }
       setMatrixAndPaint(matrix)
       callback(null, innerMatrix)
@@ -109,7 +109,7 @@ const WebLeds = socket => {
   const setPixels = (sync = true, matrix, callback = noop) => {
     return (sync ? setPixelsSync : setPixelsAsync)(matrix, callback)
   }
-  
+
   const setPixelSync = (x, y, r, g, b) => {
     const rgb = rgbArray(r, g, b)
 
@@ -118,7 +118,7 @@ const WebLeds = socket => {
     } catch (error) {
       return console.error(error.messsage)
     }
-    
+
     setPixelAndPaint(x, y, rgb)
   }
 
@@ -134,7 +134,7 @@ const WebLeds = socket => {
       try {
         checkXY(x, y)
       } catch (error) {
-        return reject(callback(error))
+        return reject(error)
       }
 
       setPixelAndPaint(x, y, rgb)
@@ -177,7 +177,7 @@ const WebLeds = socket => {
     return new Promise(async (resolve, reject) => {
       if (letter.length !== 1) {
         const errorMessage = 'Only one character may be passed into showLetter'
-        return reject(callback(Error(errorMessage)))
+        return reject(Error(errorMessage))
       }
 
       const pixels = letterPixels(letter, textColor, backColor)
@@ -191,7 +191,7 @@ const WebLeds = socket => {
         await setPixelsAsync(pixels)
         resolve(pixels)
       } catch (error) {
-        reject(callback(error))
+        reject(error)
       } finally {
         rotation = previousRotation
       }
@@ -227,7 +227,7 @@ const WebLeds = socket => {
           scroll(pixels.slice(MATRIX_SIZE))
         } catch (error) {
           rotation = previousRotation
-          return reject(callback(error))
+          return reject(error)
         }
       }
 
@@ -253,7 +253,7 @@ const WebLeds = socket => {
           await sleep(flashSpeed)
           flash(message.slice(1))
         } catch (error) {
-          return reject(console.error(error.message))
+          return reject(error)
         }
       }
 
@@ -264,11 +264,11 @@ const WebLeds = socket => {
   // Flip LED matrix horizontal
   const flipH = (sync = true, redraw = true, callback = noop) => {
     const flipped = horizontalMirror(innerMatrix)
-    
+
     if (redraw) {
       return setPixels(sync, flipped, callback)
     }
-    
+
     return sync
       ? flipped
       : callback(null, flipped)

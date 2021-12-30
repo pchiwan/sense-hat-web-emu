@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { shallow } from 'preact-render-spy'
+import { shallow } from 'enzyme'
 import MockedSocket from 'socket.io-mock'
 
 import Console from './console'

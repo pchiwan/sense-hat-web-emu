@@ -28,10 +28,6 @@ function consoleLogMatrix (matrix) {
   )
 }
 
-function expectValueToBeError (value) {
-  expect(value).toBeInstanceOf(Error)
-}
-
 function reduceMatrix (matrix, callback) {
   const MatrixSize = Math.sqrt(matrix.length)
 
@@ -60,6 +56,5 @@ function conditionallyFillMatrix (matrix, value, conditionFn) {
 module.exports = {
   conditionallyFillMatrix,
   consoleLogMatrix,
-  expectValueToBeError,
   reduceMatrix
 }

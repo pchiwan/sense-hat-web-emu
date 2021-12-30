@@ -1,15 +1,16 @@
 {
   "name": "sense-hat-web-emu",
-  "version": "2.0.3",
+  "version": "0.0.0-development",
   "description": "Web emulator for Sense HAT applications",
-  "main": "dist/index.js",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "main": "client.js",
   "scripts": {
     "build": "yarn build:client && yarn build:server",
-    "build:client": "parcel build ./src/client/index.js --out-dir dist --out-file client.js --public-url ./dist --no-source-maps",
-    "build:server": "parcel build ./src/index.js --out-dir dist --no-source-maps --target node && yarn copy-assets",
+    "build:client": "esbuild ./src/client --bundle --minify --loader:.js=jsx --loader:.png=dataurl --outfile=dist/client.js --jsx-factory=h --jsx-fragment=Fragment",
+    "build:server": "esbuild ./src/index.js --bundle --minify --platform=node --external:uws --outfile=dist/index.js && yarn copy-assets",
     "copy-assets": "cp -rf ./src/index.html ./dist/index.html && cp -rf ./src/assets ./dist",
     "start": "concurrently \"yarn start:client\" \"yarn start:server\"",
-    "start:client": "parcel build ./src/client/index.js --out-dir dist --out-file client.js --public-url ./dist",
+    "start:client": "esbuild ./src/client --bundle --loader:.js=jsx --outfile=dist/client.js --jsx-factory=h --jsx-fragment=Fragment --watch",
     "start:server": "nodemon ./src/index.js",
     "serve": "node ./dist/index.js",
     "semantic-release": "semantic-release",
@@ -27,41 +28,45 @@
   "author": "Sílvia Mur <silvia.murblanch@gmail.com>",
   "homepage": "https://github.com/pchiwan/sense-hat-web-emu#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-preact": "^1.1.0",
-    "babel-preset-stage-0": "^6.24.1",
     "colors": "^1.3.2",
     "concurrently": "^4.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-preact-pure": "^3.3.0",
+    "esbuild": "^0.14.9",
     "eslint": "4.19.1",
     "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.6.0",
+    "jest": "^27.4.5",
+    "jest-preset-preact": "^4.0.5",
     "nodemon": "^1.18.5",
-    "parcel-bundler": "^1.12.3",
-    "preact-render-spy": "^1.3.0",
+    "regenerator-runtime": "^0.13.9",
     "semantic-release": "^18.0.1",
-    "socket.io-mock": "^1.2.3"
+    "socket.io-mock": "^1.3.2"
   },
   "dependencies": {
+    "@preact/compat": "^17.0.3",
     "better-opn": "^0.1.0",
     "express": "^4.16.4",
     "minimist": "^1.2.0",
     "pngjs": "^3.3.3",
-    "preact": "^8.3.1",
-    "preact-compat": "^3.18.4",
+    "preact": "^10.6.4",
+    "preact-compat": "^3.19.0",
+    "react": "npm:@preact/compat@^17.0.3",
+    "react-dom": "npm:@preact/compat@^17.0.3",
     "shelljs-nodecli": "^0.1.1",
     "socket.io": "^2.1.1",
     "yargs": "^13.3.0"
   },
   "jest": {
+    "preset": "jest-preset-preact",
+    "setupFiles": [
+      "<rootDir>/test/setupTests.js"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|svg)$": "<rootDir>/test/fileMock.js"
     },
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
     ],
     "roots": [
       "src"

@@ -1,5 +1,8 @@
 import App from './app'
 
-const socket = window.io()
+export const connect = ()=>{
+  const socket = window.io()
+  App(socket)
+}
 
-App(socket)
+connect()
